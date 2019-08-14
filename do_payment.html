@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="mobile-web-app-capable" content="yes">
+  	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- local css -->
+ 	<!---<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"/> -->
+  <!-- Title -->
+    <title>PayNudge</title>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <div class="container">
+        <a class="navbar-brand mr-4" href="/">PayNudge</a>
+        </div>
+    </nav>
+  </header>
+
+  <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-8">
+          <div class="content-section">
+            <div class="jumbotron jumbotron-fluid">
+              <div class="container">
+                  <button class="btn btn-info">Proceed to Pay!</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+<script type="text/javascript" src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script type="text/javascript">
+
+    let params = new URLSearchParams(location.search);
+
+    var options = {
+        "key": "rzp_test_SnOiB7Tz90f9UR",
+        "subscription_id": params.get('token'),
+        "handler": function (resp) {
+            alert("Success! Payment ID: ", resp.razorpay_payment_id);
+            alert("Payment Error: ", resp.error.description);
+        },
+        "image": 'https://i.imgur.com/n5tjHFD.png',
+    };
+
+    var razorpay = new Razorpay(options);
+
+  document.querySelector(".btn").addEventListener("click",function() {
+  // has to be placed within user initiated context, such as click, in order for popup to open.
+    //razorpay.createPayment(data);
+    razorpay.open();
+});
+
+</script>
+   
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
