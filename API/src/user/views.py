@@ -44,7 +44,7 @@ class UserLoginResource(Resource):
                     jsonify({'id': user['id'],
                              'authentication_token': create_access_token(identity=user, expires_delta=expires)}), 200)
             else:
-                return make_response(jsonify({'meta': {'code': 403}}), 403)
+                return make_response(jsonify({"error": {"code": 400, "msg": "Activate user first"}}), 400)
 
         else:
             data = request.form
@@ -76,7 +76,7 @@ class UserRegisterResource(Resource):
         #     return make_response(jsonify(str(e)), 400)
         redis_store.setex('user:' + data['mobile_number'], 10 * 600, json.dumps(data))
         send_otp(user.mobile_number, 'Your otp to sign up at zoPay is {0}. Valid for 10 minutes.')
-        return make_response(jsonify({}), 200)
+        return make_response(jsonify({"success": "An OTP has been sent to your mobile number. Please verify."}), 200)
 
 
 def send_otp(phone: str, content) -> bool:
@@ -102,12 +102,13 @@ class UserVerifyResource(Resource):
             if errors:
                 return make_response(jsonify(errors), 400)
             try:
+                user.active = True
                 db.session.add(user)
                 db.session.commit()
             except (IntegrityError, InvalidRequestError) as e:
                 print(e)
                 db.session.rollback()
-                return make_response(jsonify({}), 400)
+                return make_response(jsonify(error={'code': 400 }), 400)
             expires = timedelta(days=365)
             return make_response(
                 jsonify({'id': user.id,
