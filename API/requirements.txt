@@ -16,7 +16,7 @@ Flask==1.1.0
 Flask-Admin==1.5.3
 -e git://github.com/saurabh1e/flask_admin_impexp.git@7fca7e5b6c348dd2c1ad4643a06e528a9bd4b30c#egg=flask_admin_impexp
 Flask-BabelEx==0.9.3
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 Flask-Excel==0.0.7
 Flask-JWT-Extended==3.20.0
 Flask-Limiter==1.0.1
