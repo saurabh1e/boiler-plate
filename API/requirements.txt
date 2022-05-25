@@ -48,7 +48,7 @@ passlib==1.7.1
 pyexcel==0.5.14
 pyexcel-io==0.5.18
 pyexcel-webio==0.1.4
-PyJWT==1.7.1
+PyJWT==2.4.0
 python-dateutil==2.8.0
 python-editor==1.0.4
 pytz==2019.1
